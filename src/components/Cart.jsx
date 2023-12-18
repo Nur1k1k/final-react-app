@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { delCart } from "../redux/action/index";
 
 const Cart = () => {
- 
+  const state = useSelector((state) => state.handleCart);
+  const dispatch = useDispatch();
   const handleClose = (item) => {
-
+    dispatch(delCart(item));
   };
 
   const cartItems = (cartItem) => {

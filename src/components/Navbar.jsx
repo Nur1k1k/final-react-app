@@ -1,24 +1,77 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 export default function Navbar(props) {
   const state = useSelector((state) => state.handleCart);
 
   const List = () => {
-  
+    if (window.innerWidth < 576) {
+      console.log(window.innerWidth);
+      // return (
+      //   <>
+      //     <div>
+      //       {Login()}
+      //       {Register()}
+      //       {Saved()}
+
+      //       {Logout()}
+      //     </div>
+      //   </>
+      // );
+    }
   };
   const handleLogout = () => {
     props.data.setdata(null);
     console.log(props.data, "ana handle logout");
   };
   const Saved = () => {
-   
+    return (
+      <NavLink
+        to="/cart"
+        className="btn btn-outline-dark ms-2 d-flex align-items-center"
+      >
+        <i className="fa fa-sharp fa-solid fa-bookmark me-2"></i> Saved (
+        {state.length})
+      </NavLink>
+    );
   };
   const Login = () => {
-    
+    if (props.data.actualdata != null) {
+      return (
+        <>
+          <div className="card  --bs-dark">
+            <div className="card-body ">{props.data.actualdata}</div>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <NavLink to="/login" className="btn btn-outline-dark">
+          <i className="fa fa-sign-in me-1"></i> Login
+        </NavLink>
+      );
+    }
+  };
+  const Register = () => {
+    if (props.data.actualdata === null)
+      return (
+        <NavLink to="/register" className="btn btn-outline-dark ms-2">
+          <i className="fa fa-user-plus me-1"></i> Register
+        </NavLink>
+      );
   };
   const Logout = () => {
-    
+    if (props.data.actualdata != null) {
+      return (
+        <NavLink
+          to="/E-mart"
+          className="btn btn-outline-dark ms-2 d-flex align-items-center"
+          onClick={handleLogout}
+        >
+          <i className="fa-sharp fa-regular fa-x"></i> Logout
+        </NavLink>
+      );
+    }
   };
   return (
     <div>
