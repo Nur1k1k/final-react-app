@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
-
+import { NavLink } from "react-router-dom";
 export default function Products() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
   let componentMounted = true;
- 
+  useEffect(() => {
+    const getproducts = async () => {
+      setLoading(true);
+      const respone = await fetch("https://fakestoreapi.com/products");
+      if (componentMounted) {
+        setData(await respone.clone().json());
+        setFilter(await respone.json());
+        setLoading(false);
+      }
+      return () => {
+        componentMounted = false;
+      };
+    };
+    getproducts();
+  }, []);
   const Loading = () => {
     console.log("ana loading");
     return (
@@ -26,7 +40,11 @@ export default function Products() {
       </>
     );
   };
+  const filterProduct = (cat) => {
+    const updatedList = data.filter((x) => x.category === cat);
 
+    setFilter(updatedList);
+  };
   const ShowProducts = () => {
     return (
       <>
@@ -78,7 +96,12 @@ export default function Products() {
                       {product.title.substring(0, 12)}...
                     </h5>
                     <p className="card-text lead fw-bold">${product.price}</p>
-             
+                    <NavLink
+                      to={`/products/${product.id}`}
+                      className="btn btn-outline-dark"
+                    >
+                      Buy Now
+                    </NavLink>
                   </div>
                 </div>
               </div>
