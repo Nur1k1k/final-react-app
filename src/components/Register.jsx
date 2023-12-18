@@ -5,49 +5,41 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { NavLink } from "react-router-dom";
 
 export default function Registration() {
-  // State hooks for form input values
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [passconf, setPassConf] = useState(false);
   const [name, setName] = useState("");
 
-  // Event handlers for input changes
-  const handleEmail = (e) => {
+  const handleemail = (e) => {
     setEmail(e.target.value);
   };
-  const handlePass = (e) => {
+  const handlepass = (e) => {
     setPass(e.target.value);
   };
-  const handlePassConf = (e) => {
-    // Set passconf to true if the entered password matches the confirmation password
+  const handlepassconf = (e) => {
     if (e.target.value === pass) setPassConf(true);
     else setPassConf(false);
   };
-  const handleName = (e) => {
+  const handlename = (e) => {
     setName(e.target.value);
   };
-
-  // Event handler for form submission
-  const handleCreateAccount = (e) => {
+  const handlecreatacc = (e) => {
     e.preventDefault();
-    // Check if passwords match before creating an account
     if (passconf) {
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
-          // Account created successfully
+          // created
           const user = userCredential.user;
-          // Log the user object to the console
+          // ...
           console.log(user);
         })
         .catch((error) => {
-          // Handle errors if account creation fails
           const errorCode = error.code;
           const errorMessage = error.message;
         });
     }
   };
-
   return (
     <div>
       <Container>
@@ -56,19 +48,17 @@ export default function Registration() {
             <Card className="px-4">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
-                  {/* Application logo */}
                   <h2 className="fw-bold mb-2 text-center text-uppercase ">
                     Logo
                   </h2>
                   <div className="mb-3">
-                    {/* Registration form */}
                     <Form>
                       <Form.Group className="mb-3" controlId="Name">
                         <Form.Label className="text-center">Name</Form.Label>
                         <Form.Control
                           type="text"
                           placeholder="Enter Name"
-                          onChange={handleName}
+                          onChange={handlename}
                         />
                       </Form.Group>
 
@@ -79,7 +69,7 @@ export default function Registration() {
                         <Form.Control
                           type="email"
                           placeholder="Enter email"
-                          onChange={handleEmail}
+                          onChange={handleemail}
                         />
                       </Form.Group>
 
@@ -91,7 +81,7 @@ export default function Registration() {
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          onChange={handlePass}
+                          onChange={handlepass}
                         />
                       </Form.Group>
                       <Form.Group
@@ -102,7 +92,7 @@ export default function Registration() {
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          onChange={handlePassConf}
+                          onChange={handlepassconf}
                         />
                       </Form.Group>
                       <Form.Group
@@ -110,20 +100,18 @@ export default function Registration() {
                         controlId="formBasicCheckbox"
                       ></Form.Group>
                       <div className="d-grid">
-                        {/* Button to create the account */}
                         <Button
                           variant="primary"
                           type="submit"
-                          onClick={handleCreateAccount}
+                          onClick={handlecreatacc}
                         >
                           Create Account
                         </Button>
                       </div>
                     </Form>
-                    {/* Login link */}
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                        Already have an account?{" "}
+                        Already have an account??{" "}
                         <NavLink
                           to="/login"
                           className="btn btn-outline-dark ms-2 "
